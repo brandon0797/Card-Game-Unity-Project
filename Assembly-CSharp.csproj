@@ -39,6 +39,10 @@
      <Compile Include="Assets\Scripts\DrawCards.cs" />
      <Compile Include="Assets\Scripts\DragDrop.cs" />
      <Compile Include="Assets\Scripts\PlayerManager.cs" />
+     <Compile Include="Assets\Scripts\CardFlip.cs" />
+     <Compile Include="Assets\Scripts\CardZoom.cs" />
+     <Compile Include="Assets\Scripts\TargetClick.cs" />
+     <Compile Include="Assets\Scripts\IncrementClick.cs" />
      <None Include="Assets\ScriptTemplates\51-Mirror__Network Authenticator-NewNetworkAuthenticator.cs.txt" />
      <None Include="Assets\ScriptTemplates\56-Mirror__Network Discovery-NewNetworkDiscovery.cs.txt" />
      <None Include="Assets\Mirror\Version.txt" />
@@ -273,20 +277,20 @@
     <Reference Include="UnityEditor.UnityConnectModule">
         <HintPath>D:\Unity Editor\2020.3.26f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-        <HintPath>D:\Unity Projects\Online Sabobatage\Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Mono.CecilX.Rocks">
+        <HintPath>D:\Unity Projects\Online Sabobatage\Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.CecilX.Pdb">
+        <HintPath>D:\Unity Projects\Online Sabobatage\Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.Pdb.dll</HintPath>
     </Reference>
     <Reference Include="Mono.CecilX">
         <HintPath>D:\Unity Projects\Online Sabobatage\Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.CecilX.Rocks">
-        <HintPath>D:\Unity Projects\Online Sabobatage\Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.Rocks.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+        <HintPath>D:\Unity Projects\Online Sabobatage\Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Mono.CecilX.Mdb">
         <HintPath>D:\Unity Projects\Online Sabobatage\Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.Mdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.CecilX.Pdb">
-        <HintPath>D:\Unity Projects\Online Sabobatage\Assets\Mirror\Plugins\Mono.Cecil\Mono.CecilX.Pdb.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
         <HintPath>D:\Unity Editor\2020.3.26f1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>
@@ -725,29 +729,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Mirror.csproj">
+      <Project>{ef916ec5-a024-8c3f-8843-2e9a57c6878d}</Project>
+      <Name>Mirror</Name>
+    </ProjectReference>
     <ProjectReference Include="kcp2k.csproj">
       <Project>{235f2bac-7c7f-c719-b48c-81944b2dc994}</Project>
       <Name>kcp2k</Name>
     </ProjectReference>
-    <ProjectReference Include="Mirror.Editor.csproj">
-      <Project>{52dd9357-33cc-a1f8-a4dc-ae5f6b8b4bbb}</Project>
-      <Name>Mirror.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="where-allocations.csproj">
-      <Project>{20beb212-f1ad-e791-5744-43fc9c0f737a}</Project>
-      <Name>where-allocations</Name>
-    </ProjectReference>
-    <ProjectReference Include="Telepathy.csproj">
-      <Project>{2820c336-b8df-e7ff-214e-12a5263ee125}</Project>
-      <Name>Telepathy</Name>
-    </ProjectReference>
-    <ProjectReference Include="Mirror.Components.csproj">
-      <Project>{cb09bb6b-b0c2-010d-70d4-82b8ec998158}</Project>
-      <Name>Mirror.Components</Name>
-    </ProjectReference>
     <ProjectReference Include="Mirror.Examples.csproj">
       <Project>{bf5a9a16-3da1-c1d1-9ede-86c484c4574c}</Project>
       <Name>Mirror.Examples</Name>
+    </ProjectReference>
+    <ProjectReference Include="Mirror.Editor.csproj">
+      <Project>{52dd9357-33cc-a1f8-a4dc-ae5f6b8b4bbb}</Project>
+      <Name>Mirror.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Mirror.CompilerSymbols.csproj">
       <Project>{a2bc7800-3c01-d7d0-fb7d-ff977f816db3}</Project>
@@ -757,13 +753,21 @@
       <Project>{efcfa11f-2694-7320-dcc7-4b8c2638b44e}</Project>
       <Name>Mirror.Authenticators</Name>
     </ProjectReference>
-    <ProjectReference Include="Mirror.csproj">
-      <Project>{ef916ec5-a024-8c3f-8843-2e9a57c6878d}</Project>
-      <Name>Mirror</Name>
+    <ProjectReference Include="Telepathy.csproj">
+      <Project>{2820c336-b8df-e7ff-214e-12a5263ee125}</Project>
+      <Name>Telepathy</Name>
+    </ProjectReference>
+    <ProjectReference Include="where-allocations.csproj">
+      <Project>{20beb212-f1ad-e791-5744-43fc9c0f737a}</Project>
+      <Name>where-allocations</Name>
     </ProjectReference>
     <ProjectReference Include="SimpleWebTransport.csproj">
       <Project>{078e88b4-b2e0-5da6-75c3-d045c61e23a4}</Project>
       <Name>SimpleWebTransport</Name>
+    </ProjectReference>
+    <ProjectReference Include="Mirror.Components.csproj">
+      <Project>{cb09bb6b-b0c2-010d-70d4-82b8ec998158}</Project>
+      <Name>Mirror.Components</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
