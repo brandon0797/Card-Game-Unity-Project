@@ -12,13 +12,13 @@ public class CardFlip : MonoBehaviour
     {
         Sprite currentSprite = gameObject.GetComponent<Image>().sprite;
 
-        if (currentSprite == CardFront)
+        if (currentSprite == CardBack)
         {
-            gameObject.GetComponent<Image>().sprite = CardBack;
+            gameObject.GetComponent<Image>().sprite = CardFront;
         }
         else
         {
-            gameObject.GetComponent<Image>().sprite = CardFront;
+            gameObject.GetComponent<Image>().sprite = CardBack;
         }
     }
 }

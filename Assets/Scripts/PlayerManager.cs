@@ -5,13 +5,12 @@ using Mirror;
 
 public class PlayerManager : NetworkBehaviour
 {
-    public GameObject Card1;
-    public GameObject Card2;
+    public GameObject[] Cards;
     public GameObject PlayerArea;
     public GameObject EnemyArea;
     public GameObject DropZone;
 
-    List<GameObject> cards = new List<GameObject>();
+    List<GameObject> deck = new List<GameObject>();
 
     public override void OnStartClient()
     {
@@ -21,23 +20,31 @@ public class PlayerManager : NetworkBehaviour
         EnemyArea = GameObject.Find("EnemyArea");
         DropZone = GameObject.Find("DropZone");
     }
-
+    
     [Server]
     public override void OnStartServer()
     {
         base.OnStartServer();
 
-        cards.Add(Card1);
-        cards.Add(Card2);
-        Debug.Log(cards);
-    }
+        int[] card_amounts = new int[] {8,3,3,3,3,4,12,12,12,4,4,4,3,2,2,5,3,5,2,3,2,3,3,3,2};
+        for (int i = 0; i < 25; i++)
+        {
+            for (int j = 0; j < card_amounts[i]; j++)
+            {   
+                deck.Add(Cards[i]);
+            }
+        }
 
+        Debug.Log("Deck Size: " + deck.Count);
+    }
+    
     [Command]
     public void CmdDealCards()
     {
         for (int i = 0; i < 5; i++)
         {
-            GameObject card = Instantiate(cards[Random.Range(0, cards.Count)], new Vector2(0,0), Quaternion.identity);
+            GameObject card = Instantiate(deck[Random.Range(0, deck.Count-1)], new Vector2(0,0), Quaternion.identity);
+            Debug.Log("Deck Size: " + deck.Count);
             NetworkServer.Spawn(card, connectionToClient);
             RpcShowCard(card, "Dealt");
         }
@@ -52,6 +59,26 @@ public class PlayerManager : NetworkBehaviour
     void CmdPlayCard(GameObject card)
     {
         RpcShowCard(card, "Played");
+
+        if (isServer)
+        {
+            UpdateTurnsPlayed();
+        }
+    }
+
+    [Server]
+    void UpdateTurnsPlayed()
+    {
+        GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gm.UpdateTurnsPlayed();
+        RpcLogToClients("Turns Played: " + gm.TurnsPlayed);
+
+    }
+    //Rpc = Remote Procedure call
+    [ClientRpc]
+    void RpcLogToClients(string message)
+    {
+        Debug.Log(message);
     }
 
     [ClientRpc]
